@@ -1,9 +1,8 @@
 # Moltin API Authentication
 
-Thank you for choosing our services.
-We provide the most cutting edge payment processor to enable mobile checkout in your store.
+Moltin provides the most cutting edge payment processor to enable mobile checkout in your store.
 
-The Moltin SDK is the easiest way to integrate payments in your iOS app. Visit our [Swift](https://moltin.com/getting-started/swift) or [Objective C](https://moltin.com/getting-started/objective-c) to get started. Both are open source and you can inspect the source code at any time.
+The Moltin SDK is the easiest way to integrate payments in your iOS app. Visit  [Swift](https://moltin.com/getting-started/swift) or [Objective C](https://moltin.com/getting-started/objective-c) to get started. Both are open source and you can inspect the source code at any time.
 
 This tutorial describes the authentication using direct connections to the Moltin API. Use this when you don't want to create 3rd party dependencies to your project.
 On this premise, no other libraries have been chosen for this tutorial and example project.
@@ -61,15 +60,16 @@ For all future requests, the authorization token should be included in the http 
 Authorization: Bearer followed_by_the_valid_access_token_XXX
 ```
 
-To exemplify this concept, we'll use a *products* endpoint.
+To exemplify this concept, we'll use the *products* endpoint.
 The list of products can be accessed using a GET request made to ` https://api.molt.in/v1/products`.
-In the tutorial we aim to show that a *400* response is received when the token is not available and a *200* response is received when the header is properly formed.
+This tutorial aims to show that a *400* response is received when the token is not available and a *200* response is received when the header is properly formed.
 
 ![Products Success](moltin-products-success.gif)
 
 ### Using an expired token
 
 When the token expires, any following API call will receive a result similar to:
+
 ```js
 {
   "status":false,
@@ -152,9 +152,9 @@ The above method works on an ordinary swift dictionary such as `["key1": "value1
 
 ### Keychain Wrapper
 
-At Moltin we feel it's important to promote the best security practices when the user's data is concerned.
+I feel it's important to promote the best security practices when the user's data is concerned.
 The safest way to store values on iOS is to use the built in encryption systems accessible via the keychain.
-For tutorial purposes we could have stored the token in an instance variable only or `UserDefaults`. The solution below is extensible and can be used as a starting point for a custom implementation.
+For tutorial purposes one could have stored the token in an instance variable only or `UserDefaults`. The solution below is extensible and can be used as a starting point for a custom implementation.
 
 1. Create a new file in Xcode and chose a **Cocoa Touch Class** template.
 2. Save it in the project directory as **KeychainWrapper**.
@@ -270,12 +270,14 @@ The purpose of this class is to create a **MoltinKeychainService** and provide e
 
 The minimal token storage shown below saves the access token for later use. 
 When the token expires, as described in the documentation, an error response is received to any request:
+
 ```js
 {
   "status":false,
   "error":"Access token is not valid"
 }
 ```
+
 This class is capable of evaluating request responses to determine if the current token is expired.
 
 1. Create a new file in Xcode and chose a **Cocoa Touch Class** template.
@@ -379,7 +381,7 @@ class MoltinTokenStorage: NSObject {
 }
 ```
 
-The `TokenStorage` class leverages on the `KeychainWrapper` and ads additional functionality.
+The `TokenStorage` class leverages on the `KeychainWrapper` and adds additional functionality.
 The method `func tokenExpiredMessage(data: Data?)` uses `JSONSerialization` to check the response for an authentication error. Tokens are valid for an hour. If the expiry time is reached, an auth or refresh request should be made before any other request.
 The largest missing functionality in the above code is the token expiration time handling.
 
@@ -552,7 +554,7 @@ class Moltin: NSObject {
 ## View Controller
 
 Now that the API interface is in place, integration in the view controller can be accomplished.
-The buttons need to access the Moltin API and check the result of each call in the completion block to see if an errorMessage string is present.
+The buttons need to access the Moltin API and check the result of each call in the completion block to see if an `errorMessage` string is present.
 Helper methods can be used to make an `UIAlertController` code less duplicated.
 
 1. Open the **ViewController.swift** in the editor
@@ -667,7 +669,7 @@ To review the current flows:
 * Add token expiration code
 
 ## Conclusion
-We demonstrated in this tutorial the interaction with the Moltin API using iOS standard SDK.
+This tutorial demonstrates the interaction with the Moltin API using iOS standard SDK.
 Apart from the token refreshing code, this is an implementation that can be used as a merchant app template.
 More endpoints can be added straight in the `Moltin.swift` file following the existing authentication example to obtain a complete implementation.
 
